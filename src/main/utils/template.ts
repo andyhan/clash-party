@@ -13,6 +13,7 @@ export const defaultConfig: IAppConfig = {
   trayProxyGroupStyle: 'default',
   disableTrayIconColor: false,
   maxLogDays: 7,
+  maxLogFileSize: 10,
   proxyCols: 'auto',
   connectionDirection: 'asc',
   connectionOrderBy: 'time',

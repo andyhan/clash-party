@@ -3,7 +3,7 @@ import { readFile, rm, writeFile } from 'fs/promises'
 import { promisify } from 'util'
 import path from 'path'
 import os from 'os'
-import { createWriteStream, existsSync } from 'fs'
+import { existsSync } from 'fs'
 import chokidar, { FSWatcher } from 'chokidar'
 import { app, ipcMain } from 'electron'
 import { mainWindow } from '../window'
@@ -28,6 +28,7 @@ import { startMonitor } from '../resolve/trafficMonitor'
 import { safeShowErrorBox } from '../utils/init'
 import i18next from '../../shared/i18n'
 import { managerLogger } from '../utils/logger'
+import { createCappedLogWritableStream } from '../utils/logFile'
 import {
   startMihomoTraffic,
   startMihomoConnections,
@@ -210,9 +211,6 @@ async function prepareCore(detached: boolean, skipStop = false): Promise<CoreCon
 function spawnCoreProcess(config: CoreConfig): ChildProcess {
   const { corePath, workDir, ipcPath, cpuPriority, detached } = config
 
-  const stdout = createWriteStream(coreLogPath(), { flags: 'a' })
-  const stderr = createWriteStream(coreLogPath(), { flags: 'a' })
-
   const proc = spawn(corePath, ['-d', workDir, ctlParam, ipcPath], {
     detached,
     stdio: detached ? 'ignore' : undefined
@@ -226,6 +224,8 @@ function spawnCoreProcess(config: CoreConfig): ChildProcess {
   }
 
   if (!detached) {
+    const stdout = createCappedLogWritableStream(coreLogPath())
+    const stderr = createCappedLogWritableStream(coreLogPath())
     proc.stdout?.pipe(stdout)
     proc.stderr?.pipe(stderr)
   }

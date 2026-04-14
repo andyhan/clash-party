@@ -199,6 +199,7 @@
   "mihomo.disableEmbedCA": "Отключить встроенный CA",
   "mihomo.disableSystemCA": "Отключить системный CA",
   "mihomo.logRetentionDays": "Дни хранения логов",
+  "mihomo.logFileSizeLimit": "Лимит одного лог-файла (MB)",
   "mihomo.logLevel": "Уровень логирования",
   "mihomo.selectLogLevel": "Выберите уровень логирования",
   "mihomo.silent": "Тихий",

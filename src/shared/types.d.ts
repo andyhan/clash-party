@@ -312,6 +312,7 @@ interface IAppConfig {
   autoCloseConnection: boolean
   sysProxy: ISysProxyConfig
   maxLogDays: number
+  maxLogFileSize: number
   userAgent?: string
   delayTestConcurrency?: number
   delayTestUrl?: string

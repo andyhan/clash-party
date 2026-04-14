@@ -96,6 +96,7 @@ const Mihomo: React.FC = () => {
     smartCoreStrategy = 'sticky-sessions',
     smartCollectorSize = 100,
     maxLogDays = 7,
+    maxLogFileSize = 10,
     sysProxy,
     showMixedPort,
     enableMixedPort = true,
@@ -1427,6 +1428,26 @@ const Mihomo: React.FC = () => {
                 const num = parseInt(v)
                 if (!isNaN(num)) {
                   patchAppConfig({ maxLogDays: num })
+                }
+              }}
+            />
+          </SettingItem>
+          <SettingItem title={t('mihomo.logFileSizeLimit')} divider>
+            <Input
+              size="sm"
+              type="number"
+              className="w-[100px]"
+              value={maxLogFileSize.toString()}
+              onValueChange={(v) => {
+                const num = parseInt(v)
+                if (!isNaN(num)) {
+                  patchAppConfig({ maxLogFileSize: num })
+                }
+              }}
+              onBlur={(e) => {
+                const num = parseInt(e.target.value)
+                if (isNaN(num) || num < 1) {
+                  patchAppConfig({ maxLogFileSize: 1 })
                 }
               }}
             />
