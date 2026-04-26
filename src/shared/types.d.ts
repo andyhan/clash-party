@@ -236,6 +236,11 @@ interface ISysProxyConfig {
   pacScript?: string
 }
 
+interface INetworkLatencyTarget {
+  name: string
+  url: string
+}
+
 interface IAppConfig {
   core: 'mihomo' | 'mihomo-alpha' | 'mihomo-smart' | 'mihomo-specific'
   specificVersion?: string
@@ -318,6 +323,7 @@ interface IAppConfig {
   delayTestConcurrency?: number
   delayTestUrl?: string
   delayTestTimeout?: number
+  networkLatencyTargets?: INetworkLatencyTarget[]
   subscriptionTimeout?: number
   encryptedPassword?: number[]
   controlDns?: boolean

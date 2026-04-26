@@ -24,6 +24,7 @@ export const defaultConfig: IAppConfig = {
   autoCheckUpdate: true,
   autoCloseConnection: true,
   subscriptionTimeout: 30000,
+  networkLatencyTargets: [],
   useNameserverPolicy: false,
   controlDns: true,
   controlSniff: true,
