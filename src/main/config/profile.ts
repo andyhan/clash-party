@@ -258,6 +258,9 @@ interface FetchResult {
   headers: Record<string, string>
 }
 
+const MAX_TIMER_DELAY_MS = 2_147_483_647
+const MAX_PROFILE_INTERVAL_MINUTES = Math.floor(MAX_TIMER_DELAY_MS / (60 * 1000))
+
 async function fetchAndValidateSubscription(options: FetchOptions): Promise<FetchResult> {
   const { url, useProxy, mixedPort, userAgent, authToken, timeout, substore } = options
 
@@ -377,10 +380,9 @@ export async function createProfile(item: Partial<IProfileItem>): Promise<IProfi
       newItem.home = headers['profile-web-page-url']
     }
     if (headers['profile-update-interval'] && !item.allowFixedInterval) {
-      // 拒绝等异常值
-      const hours = parseInt(headers['profile-update-interval'], 10)
+      const hours = Number(headers['profile-update-interval'])
       if (Number.isFinite(hours) && hours > 0) {
-        newItem.interval = hours * 60
+        newItem.interval = Math.min(Math.ceil(hours * 60), MAX_PROFILE_INTERVAL_MINUTES)
       }
     }
     if (headers['subscription-userinfo']) {
