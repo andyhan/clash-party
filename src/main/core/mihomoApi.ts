@@ -189,7 +189,7 @@ export const mihomoGroupDelay = async (group: string, url?: string): Promise<IMi
 
 export const mihomoUpgrade = async (): Promise<void> => {
   const instance = await getAxios()
-  return await instance.post('/upgrade')
+  return await instance.post('/upgrade', undefined, { timeout: 90000 })
 }
 
 export const mihomoUpgradeUI = async (): Promise<void> => {
